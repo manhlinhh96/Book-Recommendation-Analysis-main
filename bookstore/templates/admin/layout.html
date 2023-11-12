@@ -1,0 +1,94 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    {% block head %}
+    {% endblock head %}
+    <title>Admin Bookly</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/darkmode.css') }}">
+    <style>
+        .dark-mode a
+        {
+        color: #fff!important;
+        }
+        .dark-mode #header , .dark-mode small , .dark-mode label , .dark-mode tr
+        {
+            color: #fff!important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        
+        <div class="container-fluid">
+            <a href="{{url_for('admin_index')}}" class="link-dark">
+                <font face="Comic sans MS" style="padding:2%" size=" 10">Book.ly</font>
+            </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="btn btn-warning btn-md" aria-current="page" href="{{url_for('admin_add_book')}}">Add Book</a>
+                </li>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <li class="nav-item">
+                    <a class="btn btn-info" href="{{url_for('admin_contact_request')}}">Contact Request</a>
+                </li>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <li class="nav-item">
+                    <a class="btn btn-warning btn-md" href="{{url_for('admin_logout')}}">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn" href="#">
+                        <!-- partial:index.partial.html -->
+                        <label id ="switch" class="switch">
+                            <input type="checkbox" onchange="toggleTheme()" id="slider">
+                            <span class="slider round"></span>
+                        </label>
+                        <!-- partial -->
+                    </a>
+                </li>
+
+            </ul>
+            
+          </div>
+        </div>
+      </nav>
+       
+    <br><br>
+<div class="container">
+    <div class="d-flex flex-wrap justify-content-center">
+        <div class="col-lg-6 errors">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category,msg in messages %}
+
+            {% if category == 'error' %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {% else %}
+                <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+                    {% endif %}
+
+                    <strong>{{msg}}</strong>
+
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    {% block body %}
+    {% endblock body %}
+    <script src="{{ url_for('static',filename='js/darkmode.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+</body>
+</html>
